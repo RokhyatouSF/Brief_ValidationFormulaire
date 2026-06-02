@@ -1,540 +1,199 @@
-/* =========================================
-   1. VARIABLES & GLOBALS
-   ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-:root {
-    /* Primary Collaboration Theme */
-    --primary-main: #34d399; /* Green Gradient Start */
-    --primary-mid: #10b981;
-    --primary-alt: #6366f1; /* Team Collaboration Accent */
-    --bg-dark-base: #0f172a; /* Deep Teal-Green Context */
-    --bg-dark-surface: #1e293b;
-    --bg-light: #ffffff; /* Form Area Base */
-    --glass-bg: rgba(255, 255, 255, 0.05); /* Glassmorphism on form */
-    
-    /* Text Colors */
-    --text-white: #ffffff;
-    --text-black: #0f172a;
-    --text-muted: #94a3b8;
-    --text-accent: #34d399; /* For headers & accents */
-    
-    /* Functional Colors */
-    --success: #22c55e;
-    --error: #ef4444;
-    --warning: #f59e0b;
-    
-    /* UI Elements */
-    --border-radius-main: 16px;
-    --border-radius-field: 12px;
-    --shadow-main: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    --transition-fast: 0.2s ease;
-    --transition-slow: 0.4s ease;
+        :root {
+            --accent: #3ad394;
+            --error:  #ce0000;
+        }
+
+        /* ─── RESET ─── */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+       body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+
+    background:url('/images/photo.png') center center/cover no-repeat fixed;
+    position:relative;
 }
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background: rgb(255, 255, 255);
-    color: var(--text-white);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-/* =========================================
-   2. LAYOUT
-   ========================================= */
-.main-wrapper {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr; /* Image left, Form right */
-    min-height: 100vh;
-    position: relative;
-}
-
-/* =========================================
-   VISUAL SIDE (LEFT)
-   ========================================= */
-
-.visual-side {
-    background-image: url('/images/photo.png');
-    background-repeat: no-repeat;
-
-    /* IMPORTANT : affiche toute l’image */
-    background-size: contain;
-
-    background-position: center;
-
-    background-color: rgb(255, 255, 255);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 60px;
-    color: var(--text-white);
-    animation: fadeDown var(--transition-slow);
-}
-
-/* Logo area */
-.visual-side .top-logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.visual-side .top-logo img {
-    height: 50px;
-    width: auto;
-    object-fit: contain;
-    display: block;
-}
-
-/* Title */
-.visual-side .top-logo h2 {
-    font-weight: 600;
-    font-size: 1.6rem;
-}
-
-/* Big text */
-.visual-side .global-text {
-    font-weight: 700;
-    font-size: 2.2rem;
-    color: var(--primary-main);
-    text-transform: uppercase;
-    margin-top: auto;
-}
-
-/* Overlay effect */
-.visual-side::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-
-    background: linear-gradient(
-        135deg,
-        rgba(52, 211, 153, 0.15),
-        rgba(99, 102, 241, 0.08)
-    );
-
-    pointer-events: none;
-}
-
-/* =========================================
-   4. FORM SIDE (RIGHT)
-   ========================================= */
-.form-side {
-    background: var(--bg-light);
-    color: var(--text-black);
-    padding: 60px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    overflow-y: auto;
-    position: relative;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-    box-shadow: -15px 0 30px rgba(0, 0, 0, 0.1);
-    animation: fadeUp var(--transition-slow);
-}
-
-/* Glassmorphism Card on Form Side */
-.form-section {
-    background: var(--glass-bg);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 40px;
-    border-radius: var(--border-radius-main);
-    box-shadow: var(--shadow-main);
-    position: relative;
-}
-
-/* Custom Shape (Slight overlay) */
-.form-side::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 100%;
-    background: inherit;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-}
-
-/* =========================================
-   5. HEADERS & TEXT
-   ========================================= */
-.hero {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.hero h1 {
-    font-size: 2.8rem;
-    background: linear-gradient(to right, var(--primary-main), var(--primary-alt));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
-}
-
-.hero p {
-    color: var(--text-muted);
-    margin-top: 10px;
-    font-weight: 400;
-}
-
-/* =========================================
-   6. FIELDS & CONTROLS
-   ========================================= */
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-group {
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    animation: staggerGroups var(--transition-slow) forwards;
-    opacity: 0;
-}
-
-/* Apply staggered animation to all groups */
-.form-group:nth-child(1) { animation-delay: 0.1s; }
-.form-group:nth-child(2) { animation-delay: 0.2s; }
-.form-group:nth-child(3) { animation-delay: 0.3s; }
-/* ... and so on ... */
-
-label {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text-muted);
-}
-
-input, select, textarea {
-    padding: 16px 20px;
-    background: var(--bg-dark-surface);
-    border: 2px solid #334155;
-    border-radius: var(--border-radius-field);
-    color: var(--text-white);
-    font-size: 1rem;
-    transition: all var(--transition-fast);
-}
-
-input::placeholder, textarea::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-input:focus, select:focus, textarea:focus {
-    border-color: var(--primary-main);
-    box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2);
-    outline: none;
-}
-
-/* Custom styled dropdown select */
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 20px center;
-    background-size: 14px;
-    padding-right: 50px;
-}
-
-/* =========================================
-   7. INTERACTIVE & UNIQUE FIELDS
-   ========================================= */
-fieldset {
-    border: none;
-    margin: 0;
-}
-
-fieldset legend {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-}
-
-/* Radio Cards: Dials */
-.options-container {
-    display: flex;
-    gap: 15px;
-}
-
-.radio-card {
-    flex: 1;
-    padding: 15px;
-    background: var(--bg-dark-surface);
-    border: 2px solid #334155;
-    border-radius: var(--border-radius-field);
-    cursor: pointer;
-    text-align: center;
-    transition: all var(--transition-fast);
-}
-
-.radio-card:hover {
-    border-color: var(--primary-main);
-}
-
-.radio-card input {
-    display: none;
-}
-
-.radio-card span.dial {
-    font-size: 1rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.radio-card input:checked + span.dial {
-    color: var(--text-black);
-}
-
-/* Selected state: Gilded & Glowing */
-.radio-card:has(input:checked) {
-    background: var(--primary-main);
-    border-color: var(--primary-main);
-    box-shadow: 0 0 15px rgba(52, 211, 153, 0.5);
-    color: var(--text-black);
-}
-
-/* Checkbox Grid: Hexagonal Tiles */
-.checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 10px;
-}
-
-.checkbox-grid label {
-    background: var(--bg-dark-surface);
-    border: 2px solid #334155;
-    padding: 15px;
-    border-radius: var(--border-radius-field);
-    cursor: pointer;
-    text-align: center;
-    font-size: 0.9rem;
-    transition: all var(--transition-fast);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.checkbox-grid label:hover {
-    border-color: var(--primary-main);
-}
-
-.checkbox-grid input {
-    display: none;
-}
-
-.checkbox-grid input:checked + label {
-    background: var(--primary-main);
-    border-color: var(--primary-main);
-    color: var(--text-black);
-    box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-}
-
-/* Custom icons on checkbox tiles */
-.checkbox-grid label .icon {
-    font-size: 1.4rem;
-}
-
-/* =========================================
-   8. TEXTAREA & COUNTER
-   ========================================= */
-textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-.textarea-footer {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
-#charCounter {
-    transition: color var(--transition-fast);
-}
-
-#charCounter.warning { color: var(--warning); }
-#charCounter.error { color: var(--error); }
-#charCounter.success { color: var(--success); }
-
-/* =========================================
-   9. BUTTON
-   ========================================= */
-.submit-btn {
-    width: 100%;
-    padding: 18px;
-    border: none;
-    border-radius: var(--border-radius-field);
-    background: linear-gradient(135deg, var(--primary-main), var(--primary-mid));
-    color: var(--text-white);
-    font-weight: 600;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all var(--transition-slow);
-    margin-top: 15px;
-    position: relative;
-    overflow: hidden;
-}
-
-.submit-btn:hover {
-    box-shadow: 0 0 30px rgba(52, 211, 153, 0.6);
-    transform: translateY(-2px);
-}
-
-.submit-btn:active {
-    transform: translateY(1px);
-}
-
-/* Button pulse effect */
-.submit-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.submit-btn:focus::after {
-    animation: pulse var(--transition-slow) forwards;
-}
-
-/* =========================================
-   10. VALIDATIONS
-   ========================================= */
-.input-error {
-    border-color: var(--error) !important;
-    animation: shake var(--transition-fast) ease-in-out;
-}
-
-.input-success {
-    border-color: var(--success) !important;
-}
-
-.error-message {
-    font-size: 0.8rem;
-    color: var(--error);
-    margin-top: -5px;
-    min-height: 1.2rem;
-}
-
-/* Validation icons */
-.form-group.success::after {
-    content: '✔';
-    color: var(--success);
-    position: absolute;
-    top: 50px; /* adjusted */
-    right: 20px;
-    font-size: 1.1rem;
-}
-
-.form-group.error::after {
-    content: '✘';
-    color: var(--error);
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    font-size: 1.1rem;
-}
-
-/* =========================================
-   11. ANIMATIONS
-   ========================================= */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes staggerGroups {
-    to { opacity: 1; }
-}
-
-@keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(30); opacity: 0; }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-    20%, 40%, 60%, 80% { transform: translateX(4px); }
-}
-
-/* =========================================
-   12. RESPONSIVE
-   ========================================= */
-@media (max-width: 1100px) {
-    .hero h1 { font-size: 2.4rem; }
-}
-
-@media (max-width: 900px) {
-    .main-wrapper { grid-template-columns: 1fr; }
-    
-    .visual-side {
-        height: 300px; /* illustrative fixed height */
-        border-radius: 0;
-        padding: 40px;
-        order: -1; /* image top */
-    }
-    
-    .visual-side .content {
-        margin-top: auto;
-    }
-
-    .form-side {
-        padding: 40px 20px;
-        border-radius: 0;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-        margin-top: -30px;
-        position: relative;
-    }
-    
-    .form-section { padding: 30px; }
-    
-    .form-row { grid-template-columns: 1fr; gap: 0; }
-    
-    .hero h1 { font-size: 2.1rem; }
-    
-    .options-container { flex-direction: column; }
-}
+        body::before {
+            content:"";
+            position:fixed; inset:0;
+            background:
+                radial-gradient(circle at top right,  rgba(58,211,148,.18), transparent 35%),
+                radial-gradient(circle at bottom left, rgba(255,255,255,.08), transparent 40%),
+                rgba(0,0,0,.45);
+            z-index:-1;
+        }
+
+        /* ─── CARD ─── */
+        .page-container {
+            position: relative;
+            width: 100%; max-width: 1200px;
+            height: 85vh;
+            display: flex;
+            overflow: hidden;
+            background: rgb(211,116,67);
+            backdrop-filter: blur(22px);
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.35);
+            transform-style: preserve-3d;
+        }
+        .page-container::before {
+            content:"";
+            position:absolute; top:0; left:-120%; width:60%; height:100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+            transform: skewX(-25deg);
+            animation: shine 6s infinite;
+        }
+        @keyframes shine { 0%{left:-120%} 100%{left:220%} }
+
+        /* ─── LEFT ─── */
+        .illustration-side {
+            flex: 1; padding: 50px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: rgba(255,255,255,.03);
+            border-right: 1px solid rgba(255,255,255,.08);
+        }
+        .illustration-side h1 { font-size:2.4rem; color:#fff; margin-bottom:10px; }
+        .illustration-side p  { color:rgba(255,255,255,.75); line-height:1.6; margin-bottom:25px; }
+        .illustration-side img {
+            width:100%; max-width:350px; border-radius:18px;
+            border:1px solid rgba(255,255,255,.15);
+            box-shadow:0 20px 40px rgba(0,0,0,.3);
+        }
+
+        /* ─── RIGHT ─── */
+        .form-side { flex:1.2; padding:50px; overflow-y:auto; max-height:100%; }
+
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; margin-bottom:8px; font-size:14px; font-weight:600; color:#fff; }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width:100%; padding:14px 16px;
+            border-radius:12px;
+            background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,255,255,.1);
+            color:#fff;
+            transition:.3s ease;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color:rgb(73,73,73); }
+        .form-group select { color:rgb(73,73,73); }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline:none;
+            border-color:var(--accent);
+            background:rgba(255,255,255,.1);
+            box-shadow:0 0 0 4px rgba(58,211,148,.15);
+        }
+
+        .error-message { font-size:12px; margin-top:6px; min-height:16px; color:var(--error); font-weight:600; }
+        .input-error   { border:2px solid var(--error)  !important; box-shadow:0 0 18px rgba(255,77,109,.35) !important; }
+        .input-success { border:2px solid var(--accent)  !important; box-shadow:0 0 18px rgba(58,211,148,.25) !important; }
+
+        .char-counter { font-size:12px; text-align:right; color:rgba(255,255,255,.6); margin-top:5px; }
+
+        .submit-btn {
+            width:100%; padding:16px;
+            border:none; border-radius:14px;
+            background:linear-gradient(135deg,#3ad394,#2ac981);
+            color:#111e2a; font-weight:700; font-size:16px;
+            cursor:pointer; transition:.3s ease;
+        }
+        .submit-btn:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 20px 40px rgba(58,211,148,.35); }
+
+        input[type="radio"],
+        input[type="checkbox"] { accent-color:var(--accent); transform:scale(1.1); }
+
+        @media(max-width:900px){
+            .page-container { flex-direction:column; }
+            .illustration-side { border-right:none; border-bottom:1px solid rgba(255,255,255,.08); }
+            .form-side { padding:30px; }
+        }
+
+        /* ─── MODAL ─── */
+        .hidden { display:none !important; }
+
+        .modal {
+            position:fixed; inset:0;
+            background:rgba(0,0,0,.6);
+            display:flex; justify-content:center; align-items:center;
+            z-index:9999;
+        }
+        .modal-content {
+            width:min(480px, 90vw);
+            padding:32px;
+            background:rgba(20,25,35,.85);
+            backdrop-filter:blur(25px);
+            border:1px solid rgba(255,255,255,.2);
+            border-radius:24px;
+            color:#fff;
+            box-shadow:0 20px 60px rgba(0,0,0,.5);
+        }
+        .modal-content h2 { font-size:1.3rem; margin-bottom:6px; }
+
+        #previewData { margin-top:16px; }
+        #previewData .row {
+            display:flex; align-items:baseline; gap:10px;
+            padding:10px 0;
+            border-bottom:1px solid rgba(255,255,255,.08);
+        }
+        #previewData .row:last-child { border-bottom:none; }
+        #previewData .label {
+            font-size:11px; font-weight:700; text-transform:uppercase;
+            letter-spacing:.06em; color:var(--accent); min-width:80px;
+        }
+        #previewData .val { font-size:14px; opacity:.9; }
+
+        .modal-actions { display:flex; justify-content:space-between; gap:12px; margin-top:24px; }
+        .modal-actions button {
+            flex:1; padding:12px;
+            border:none; border-radius:12px;
+            cursor:pointer; font-weight:700; font-size:14px;
+            transition:.2s ease;
+        }
+        #editBtn    { background:#ff4d6d; color:#fff; }
+        #confirmBtn { background:var(--accent); color:#111e2a; }
+        #editBtn:hover    { background:#e03055; }
+        #confirmBtn:hover { background:#2ac981; }
+
+        /* ─── THANK YOU OVERLAY ─── */
+        #thankYou {
+            position:fixed; inset:0;
+            background:#0e100f;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            z-index:99999;
+        }
+        #thankYou .ty-inner {
+            display:flex; flex-direction:column;
+            align-items:center; gap:32px;
+        }
+        #svg-stage {
+            width:60vw; max-width:420px;
+            overflow:visible;
+            opacity:0;
+            fill:none;
+            stroke-width:2.2;
+        }
+        #thankYou h1 {
+            color:#fff;
+            font-size:clamp(1.4rem, 4vw, 2.2rem);
+            opacity:0;
+            text-align:center;
+        }
+
+        /* ─── PROFILE CARD ─── */
+        .profile-card {
+            margin-top:30px; padding:24px;
+            background:rgba(255,255,255,.07);
+            border:1px solid rgba(255,255,255,.15);
+            border-radius:18px; color:#fff;
+        }
+        .profile-card h2 { margin-bottom:12px; font-size:1.1rem; }
+        .profile-card p  { font-size:14px; opacity:.85; margin-bottom:6px; }

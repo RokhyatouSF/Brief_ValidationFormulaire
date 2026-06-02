@@ -4,244 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collaboration Globale | Formulaire d'Inscription</title>
-    <style>
-        :root {
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.18);
-    --text-color: #ffffff;
-    --accent: #3ad394;
-}
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Open Sans',sans-serif;
-}
+    <!-- GSAP + DrawSVG plugin (nécessaire pour drawSVG) -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/DrawSVGPlugin.min.js"></script>
 
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:40px;
-
-    background:url('/images/photo.png') center center/cover no-repeat fixed;
-    position:relative;
-}
-
-/* Overlay artistique */
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-        radial-gradient(circle at top right,
-            rgba(58,211,148,0.15),
-            transparent 30%),
-        radial-gradient(circle at bottom left,
-            rgba(255,255,255,0.08),
-            transparent 35%),
-        rgba(0,0,0,0.35);
-    z-index:-1;
-}
-
-.page-container{
-    position:relative;
-
-    width:100%;
-    max-width:1200px;
-    min-height:700px;
-
-    display:flex;
-    overflow:hidden;
-
-    background:rgba(255,255,255,0.04);
-
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:30px;
-
-    box-shadow:
-        0 25px 50px rgba(0,0,0,0.25),
-        inset 0 1px 1px rgba(255,255,255,0.15);
-
-}
-
-/* reflet lumineux */
-.page-container::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:50%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.12),
-        transparent
-    );
-    transform:skewX(-25deg);
-}
-
-.illustration-side{
-    flex:1;
-
-    background:rgba(255,255,255,0.02);
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    padding:50px;
-    text-align:center;
-
-    border-right:1px solid rgba(255,255,255,0.08);
-}
-
-.illustration-side h1{
-    font-size:2.5rem;
-    font-weight:700;
-    margin-bottom:15px;
-    color:white;
-}
-
-.illustration-side p{
-    color:rgba(255,255,255,0.8);
-    line-height:1.7;
-    margin-bottom:30px;
-}
-
-.illustration-side img{
-    width:100%;
-    max-width:350px;
-    border-radius:20px;
-
-    border:1px solid rgba(255,255,255,0.15);
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,0.25);
-}
-
-.form-side{
-    flex:1.2;
-    padding:50px;
-}
-
-.form-group{
-    margin-bottom:20px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:8px;
-    font-size:14px;
-    font-weight:600;
-    color:white;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea{
-    width:100%;
-    padding:14px 16px;
-
-    border-radius:12px;
-
-    background:rgba(255,255,255,0.06);
-
-    border:1px solid rgba(255,255,255,0.08);
-
-    color:white;
-
-    transition:.3s;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder{
-    color:rgba(255,255,255,0.5);
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
-    outline:none;
-
-    border-color:var(--accent);
-
-    background:rgba(255,255,255,0.1);
-
-    box-shadow:
-        0 0 0 4px rgba(58,211,148,0.15);
-}
-
-.submit-btn{
-    width:100%;
-    padding:16px;
-
-    border:none;
-    border-radius:14px;
-
-    background:linear-gradient(
-        135deg,
-        #3ad394,
-        #2ac981
-    );
-
-    color:#111e2a;
-
-    font-weight:700;
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-.submit-btn:hover{
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 15px 30px rgba(58,211,148,0.35);
-}
-
-@media (max-width: 900px){
-
-    .page-container{
-        flex-direction:column;
-    }
-
-    .illustration-side{
-        border-right:none;
-        border-bottom:1px solid rgba(255,255,255,0.08);
-    }
-
-    .form-side{
-        padding:30px;
-    }
-}
-    </style>
+    
+    <link href="/css/style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+    </style>
 </head>
 <body>
+
+    <!-- ═══════════ POPUP CONFIRMATION ═══════════ -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content">
+            <h2> Confirmation de ton profil</h2>
+            <p style="opacity:.6; font-size:13px; margin-top:4px;">Vérifie tes informations avant validation</p>
+            <div id="previewData"></div>
+            <div class="modal-actions">
+                <button id="editBtn">✏️ Modifier</button>
+                <button id="confirmBtn">✅ Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ THANK YOU OVERLAY ═══════════ -->
+    <div id="thankYou" class="hidden">
+        <div class="ty-inner">
+            <svg id="svg-stage" xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 103 103">
+                <defs>
+                    <linearGradient id="grad-1" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                        <stop offset=".2" stop-color="rgb(255,135,9)"/>
+                        <stop offset=".8" stop-color="rgb(247,189,248)"/>
+                    </linearGradient>
+                </defs>
+                <path stroke="url(#grad-1)"
+                      d="M50.5 50.5h50v50s-19.2 1.3-37.2-16.7S56 35.4 35.5 15.5C18.5-1 .5.5.5.5v50h50s25.6-.6 38-18 12-32 12-32h-50v100H.5S.2 80.7 11.8 68.2 40 49.7 50.5 50.5Z"/>
+            </svg>
+            <h1 id="thankYouTitle">Merci pour ton inscription ✨</h1>
+        </div>
+    </div>
+
+    <!-- ═══════════ MAIN CARD ═══════════ -->
     <div class="page-container">
-        <!-- Illustration Side -->
+
         <div class="illustration-side">
             <h1>Rejoins Notre Communauté Globale</h1>
-            <p style="color:#949ca3; margin:10px 0 30px;">Construisons ensemble le futur de la tech au Sénégal et ailleurs.</p>
-
-            <img src="/images/photo.png" alt="Collaboration Globale" style="max-width:100%; border-radius:12px;">
+            <p>Construisons ensemble le futur de la tech au Sénégal et ailleurs.</p>
+            <img src="/images/photo.png"
+                 alt="Collaboration Globale">
             <h1 style="color:#212529; margin-top:25px; font-size:24px;">COLLABORATION GLOBALE</h1>
         </div>
 
-        <!-- Form Side -->
         <div class="form-side">
-            
-            <form id="form">
+            <form id="form" novalidate>
+
                 <div class="form-row" style="display:flex; gap:20px;">
                     <div class="form-group" style="flex:1;">
                         <label for="firstName">Prénom <span style="color:red;">*</span></label>
@@ -265,10 +84,10 @@ body::before{
                     <label for="domain">Domaine de prédilection <span style="color:red;">*</span></label>
                     <select id="domain">
                         <option value="">Sélectionne ton domaine...</option>
-                        <option value="front-end">Front-End</option>
-                        <option value="back-end">Back-End</option>
-                        <option value="design-ux">Design / UX</option>
-                        <option value="data">Data / IA</option>
+                        <option value="Front-End">Front-End</option>
+                        <option value="Back-End">Back-End</option>
+                        <option value="Design / UX">Design / UX</option>
+                        <option value="Data / IA">Data / IA</option>
                     </select>
                     <div class="error-message"></div>
                 </div>
@@ -276,20 +95,24 @@ body::before{
                 <div class="form-group" id="radioGroup">
                     <label>Tu es plutôt... <span style="color:red;">*</span></label>
                     <div style="display:flex; gap:25px; margin-top:8px;">
-                        <label><input type="radio" name="rythme" value="early-bird"> ☀️ Early Bird</label>
-                        <label><input type="radio" name="rythme" value="night-owl"> 🦉 Night Owl</label>
+                        <label style="display:flex;align-items:center;gap:6px;color:#fff;">
+                            <input type="radio" name="rythme" value="Matin"> Matin
+                        </label>
+                        <label style="display:flex;align-items:center;gap:6px;color:#fff;">
+                            <input type="radio" name="rythme" value="Nuit"> Nuit
+                        </label>
                     </div>
                     <div class="error-message"></div>
                 </div>
 
                 <div class="form-group" id="checkboxGroup">
                     <label>Quelles sont tes passions ? (au moins 2) <span style="color:red;">*</span></label>
-                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-top:8px;">
-                        <label><input type="checkbox" name="interets" value="Veille Tech"> Veille Tech</label>
-                        <label><input type="checkbox" name="interets" value="Gaming"> Gaming</label>
-                        <label><input type="checkbox" name="interets" value="Sport"> Sport</label>
-                        <label><input type="checkbox" name="interets" value="Musique"> Musique</label>
-                        <label><input type="checkbox" name="interets" value="Lecture"> Lecture</label>
+                    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:8px; color:#fff;">
+                        <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" name="interets" value="Veille Tech"> Veille Tech</label>
+                        <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" name="interets" value="Gaming"> Gaming</label>
+                        <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" name="interets" value="Sport"> Sport</label>
+                        <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" name="interets" value="Musique"> Musique</label>
+                        <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" name="interets" value="Lecture"> Lecture</label>
                     </div>
                     <div class="error-message"></div>
                 </div>
@@ -308,7 +131,7 @@ body::before{
         </div>
     </div>
 
-    <script src="/js/app.js"> 
-    </script>
+
+<script src="/js/app.js"></script>
 </body>
 </html>
